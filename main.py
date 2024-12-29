@@ -11,8 +11,12 @@ def main():
     # create new GUI window
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    # restrict game draw to 60 fps
+    # create Clock object
     clock = pygame.time.Clock()
+
+    # isntantiate player object
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     dt = 0
 
     # create an infinite loop
@@ -24,10 +28,10 @@ def main():
         # fill screen with black
         screen.fill("black")
 
-        # instantiate player
-        x = SCREEN_WIDTH / 2
-        y = SCREEN_HEIGHT / 2
-        player = Player(x, y)
+        # check input and update
+        player.update(dt)
+
+        # draw player (need to draw this between black fill and updating screen 'flip')
         player.draw(screen)
 
         # flip the screen (print to screen)

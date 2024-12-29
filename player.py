@@ -21,29 +21,23 @@ class Player(CircleShape):
     def draw(self, screen):
         points = self.triangle()
         pygame.draw.polygon(screen, "white", points, 2)
-        
 
-
-"""
-# Base class for game objects
-class CircleShape(pygame.sprite.Sprite):
-    def __init__(self, x, y, radius):
-        # we will be using this later
-        if hasattr(self, "containers"):
-            super().__init__(self.containers)
-        else:
-            super().__init__()
-
-        self.position = pygame.Vector2(x, y)
-        self.velocity = pygame.Vector2(0, 0)
-        self.radius = radius
-
-    def draw(self, screen):
-        # sub-classes must override
-        pass
+    def rotate(self, dt):
+        self.rotation += PLAYER_TURN_SPEED * dt
 
     def update(self, dt):
-        # sub-classes must override
-        pass
-"""
-    
+        keys = pygame.key.get_pressed() # gets the pressed keys
+
+        if keys[pygame.K_LEFT]:
+            # rotate to the left
+            self.rotate((dt * -1))
+        if keys[pygame.K_RIGHT]:
+            # rotate to the right
+            self.rotate(dt)
+        if keys[pygame.K_UP]:
+            # ?
+            pass
+        
+        if keys[pygame.K_DOWN]:
+            # ?
+            pass
