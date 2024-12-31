@@ -51,9 +51,13 @@ def main():
             _.update(dt)
 
         # check for collisions
-        for _ in asteroids:
-            if _.check_collisions(player):
+        for asteroid in asteroids:
+            if asteroid.check_collisions(player):
                 exit("GAME OVER!!")
+            for shot in shots:
+                if asteroid.check_collisions(shot):
+                    asteroid.kill()
+                    shot.kill()
 
 
         for _ in drawable:
