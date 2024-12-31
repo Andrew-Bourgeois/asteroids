@@ -6,15 +6,18 @@ from constants import *
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from shot import Shot
 
 # ------------- Groups ------------
 updatable = pygame.sprite.Group()
 drawable = pygame.sprite.Group()
 asteroids = pygame.sprite.Group()
+shots = pygame.sprite.Group()
 
 Player.containers = (updatable, drawable)
 Asteroid.containers = (asteroids, updatable, drawable)
 AsteroidField.containers = (updatable)
+Shot.containers = (shots, updatable, drawable)
 
 def main():
     pygame.init()
@@ -31,7 +34,7 @@ def main():
     # create new asteroid field
     asteroid_field = AsteroidField()
 
-    dt = 0
+    dt = 0 # delta time
 
     # create an infinite loop
     while True:
@@ -43,18 +46,21 @@ def main():
         screen.fill("black")
 
         for _ in updatable:
+            # check player input and update any groups
+            # provide the dt argument
             _.update(dt)
 
-        # # check input and update
-        # player.update(dt)
+        # check for collisions
+        for _ in asteroids:
+            if _.check_collisions(player):
+                exit("GAME OVER!!")
+
 
         for _ in drawable:
+            # draw any drawables to the screen
             _.draw(screen)
 
-        # # draw player (need to draw this between black fill and updating screen 'flip')
-        # player.draw(screen)
-
-        # flip the screen (print to screen)
+        # flip the screen (print to/update screen)
         pygame.display.flip()
 
         # call the tick() method to wait 1/60th of a second
